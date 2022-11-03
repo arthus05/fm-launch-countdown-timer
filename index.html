@@ -11,21 +11,88 @@
   <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
   <link rel="stylesheet" href="./style.css">
 
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const getDateXDaysFromNow = (numOfDays, date = new Date()) => {
+      const daysFromNow = new Date(date.getTime());
 
-  We're launching soon
+      daysFromNow.setDate(date.getDate() + numOfDays)
 
-  Days
-  Hours
-  Minutes
-  Seconds
-  
-  <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="#">Arthus Vinicius</a>.
-  </div>
-  <script src="./main.js"></script>
+      return daysFromNow
+    }
+
+    const { useState, useEffect } = React
+    const launchDate = getDateXDaysFromNow(14)
+
+    function LaunchCountdown() {
+      const [days, setDays] = useState()
+      const [hours, setHours] = useState()
+      const [minutes, setMinutes] = useState()
+      const [seconds, setSeconds] = useState()
+
+      const setRemainingTime = (deadline) => {
+        const timeRemaining = Date.parse(deadline) - Date.now()
+
+        setDays(Math.floor(timeRemaining / (1000 * 60 * 60 * 24)))
+        setHours(Math.floor((timeRemaining / (1000 * 60 * 60)) % 24))
+        setMinutes(Math.floor((timeRemaining / (1000 * 60)) % 60))
+        setSeconds(Math.floor((timeRemaining / 1000) % 60))
+      }
+
+      useEffect(() => {
+        setRemainingTime(launchDate)
+        const interval = setInterval(() => setRemainingTime(launchDate), 1000)
+
+        return () => clearInterval(interval)
+      }, [])
+
+      return (
+        <>
+          <section className='wrapper'>
+            <header>
+              <h1>We're launching soon</h1>
+            </header>
+              
+            <main className='countdown'>
+              <section>
+                <div>{ days }</div>
+                <p>days</p>
+              </section>
+              <section>
+                <div>{ hours }</div>
+                <p>hours</p>
+              </section>
+              <section>
+                <div>{ minutes }</div>
+                <p>minutes</p>
+              </section>
+              <section>
+                <div>{ seconds }</div>
+                <p>seconds</p>
+              </section>
+            </main>
+                
+            <footer>
+            </footer>
+                  
+            <div className="attribution">
+              Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+              Coded by <a href="#">Arthus Vinicius</a>.
+            </div>
+          </section>
+        </>
+      )
+    }
+
+    const container = document.getElementById('root')
+    const root = ReactDOM.createRoot(container)
+    root.render(<LaunchCountdown />)
+  </script>
 </body>
 </html>
