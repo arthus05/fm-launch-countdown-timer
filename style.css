@@ -43,7 +43,7 @@ a:hover {
   color: var(--soft-red);
 }
 
-main {
+.content {
   display: flex;
   flex-direction: column;
   align-items: center;
