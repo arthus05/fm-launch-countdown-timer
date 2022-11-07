@@ -27,7 +27,7 @@ body {
   color: var(--grayish-blue);
   font-family: 'Red Hat Text', sans-serif;
   background-color: var(--dark-blue-purple);
-  background-image: url(/images/blob-scatter-haikei.svg), linear-gradient(var(--dark-blue-purple), #211B29);
+  background-image: url(./images/blob-scatter-haikei.svg), linear-gradient(var(--dark-blue-purple), #211B29);
   background-size: 40%;
   background-position: center;
   object-fit: cover;
